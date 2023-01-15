@@ -1,0 +1,31 @@
+name: morjoff-com-web-site
+on:
+  push:
+jobs:
+  build-and-push-morjoff-com-website-image:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # setup Docker buld action
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to Github Packages
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build image and push to GitHub Container Registry
+        uses: docker/build-push-action@v3
+        with:
+          tags: |
+            ghcr.io/akurin/morjoff-com-web-site:latest
+            ghcr.io/akurin/morjoff-com-web-site:${{ github.sha }}
+          push: true

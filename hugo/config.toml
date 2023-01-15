@@ -1,0 +1,37 @@
+baseurl = "https://morjoff.com"
+title = "Alexey Kurin"
+theme = "hugo-coder"
+languageCode = "en"
+defaultContentLanguage = "en"
+paginate = 20
+pygmentsStyle = "bw"
+pygmentsCodeFences = true
+pygmentsCodeFencesGuessSyntax = true
+enableEmoji = true
+
+[params]
+author = "Alexey Kurin"
+description = "Alexey Kurin's personal website"
+keywords = "blog,developer,personal"
+info = "Software Developer"
+avatarURL = "images/avatar.jpg"
+since = 2020
+dateformat = "January 2, 2006"
+rtl = false
+
+[taxonomies]
+category = "categories"
+series = "series"
+tag = "tags"
+
+[[params.social]]
+name = "Github"
+icon = "fa fa-2x fa-github"
+weight = 1
+url = "https://github.com/akurin/"
+
+[[params.social]]
+name = "LinkedIn"
+icon = "fa fa-2x fa-linkedin"
+weight = 2
+url = "https://www.linkedin.com/in/alexey-kurin-1988bb81/"
