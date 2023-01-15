@@ -26,6 +26,6 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           tags: |
-            ghcr.io/akurin/morjoff-com-web-site:latest
-            ghcr.io/akurin/morjoff-com-web-site:${{ github.sha }}
+            ghcr.io/akurin/morjoff-com-website-v2:latest
+            ghcr.io/akurin/morjoff-com-website-v2:${{ github.sha }}
           push: true
