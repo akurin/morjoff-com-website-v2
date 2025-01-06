@@ -35,3 +35,11 @@ name = "LinkedIn"
 icon = "fa fa-2x fa-linkedin"
 weight = 2
 url = "https://www.linkedin.com/in/alexey-kurin-1988bb81/"
+
+[languages.en]
+languageName = ":us: English"
+
+[[languages.en.menu.main]]
+name = "Blog"
+weight = 1
+url = "posts/"
