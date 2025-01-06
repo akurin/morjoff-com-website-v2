@@ -22,7 +22,7 @@ jobs:
         uses: tailscale/github-action@v2
         with:
           authkey: ${{ secrets.TAILSCALE_KEY }}
-          args: --login-server=https://morjoffhs.duckdns.org
+          args: --login-server=https://headscale.morjoff.com
 
       - name: Deploy to Kubernetes with Helm
         run: |
