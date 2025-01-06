@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  <head>
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="light dark">
@@ -13,21 +13,33 @@
 This document is a brief primer on using go templates.">
     <meta name="keywords" content="blog,developer,personal">
 
-    <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="(Hu)go Template Primer"/>
-<meta name="twitter:description" content="Hugo uses the excellent go html/template library for its template engine. It is an extremely lightweight engine that provides a very small amount of logic. In our experience that it is just the right amount of logic to be able to create a good static website. If you have used other template systems from different languages or frameworks you will find a lot of similarities in go templates.
-This document is a brief primer on using go templates."/>
+    
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="(Hu)go Template Primer">
+  <meta name="twitter:description" content="Hugo uses the excellent go html/template library for its template engine. It is an extremely lightweight engine that provides a very small amount of logic. In our experience that it is just the right amount of logic to be able to create a good static website. If you have used other template systems from different languages or frameworks you will find a lot of similarities in go templates.
+This document is a brief primer on using go templates.">
 
-    <meta property="og:title" content="(Hu)go Template Primer" />
-<meta property="og:description" content="Hugo uses the excellent go html/template library for its template engine. It is an extremely lightweight engine that provides a very small amount of logic. In our experience that it is just the right amount of logic to be able to create a good static website. If you have used other template systems from different languages or frameworks you will find a lot of similarities in go templates.
-This document is a brief primer on using go templates." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://morjoff.com/posts/hugo-template-primer/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2014-04-02T00:00:00+00:00" />
-<meta property="article:modified_time" content="2014-04-02T00:00:00+00:00" />
-<meta property="og:see_also" content="https://morjoff.com/posts/hugoisforlovers/" /><meta property="og:see_also" content="https://morjoff.com/posts/migrate-from-jekyll/" />
-<meta property="og:see_also" content="https://morjoff.com/posts/render-latex-using-katex/" /><meta property="og:see_also" content="https://morjoff.com/posts/hugo-coder-wiki/" /><meta property="og:see_also" content="https://morjoff.com/posts/theme-demo/" /><meta property="og:see_also" content="https://morjoff.com/posts/creating-a-new-theme/" /><meta property="og:see_also" content="https://morjoff.com/posts/hugoisforlovers/" />
-
+    <meta property="og:url" content="http://localhost:1313/posts/hugo-template-primer/">
+  <meta property="og:site_name" content="Alexey Kurin">
+  <meta property="og:title" content="(Hu)go Template Primer">
+  <meta property="og:description" content="Hugo uses the excellent go html/template library for its template engine. It is an extremely lightweight engine that provides a very small amount of logic. In our experience that it is just the right amount of logic to be able to create a good static website. If you have used other template systems from different languages or frameworks you will find a lot of similarities in go templates.
+This document is a brief primer on using go templates.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2014-04-02T00:00:00+00:00">
+    <meta property="article:modified_time" content="2014-04-02T00:00:00+00:00">
+    <meta property="article:tag" content="Go">
+    <meta property="article:tag" content="Golang">
+    <meta property="article:tag" content="Templates">
+    <meta property="article:tag" content="Themes">
+    <meta property="article:tag" content="Development">
+      <meta property="og:see_also" content="http://localhost:1313/posts/hugoisforlovers/">
+      <meta property="og:see_also" content="http://localhost:1313/posts/migrate-from-jekyll/">
+      <meta property="og:see_also" content="http://localhost:1313/posts/render-latex-using-katex/">
+      <meta property="og:see_also" content="http://localhost:1313/posts/theme-demo/">
+      <meta property="og:see_also" content="http://localhost:1313/posts/hugoisforlovers/">
+      <meta property="og:see_also" content="http://localhost:1313/posts/migrate-from-jekyll/">
 
 
     <title>
@@ -35,7 +47,7 @@ This document is a brief primer on using go templates." />
 </title>
 
     
-      <link rel="canonical" href="https://morjoff.com/posts/hugo-template-primer/">
+      <link rel="canonical" href="http://localhost:1313/posts/hugo-template-primer/">
     
 
     <link rel="preload" href="/fonts/forkawesome-webfont.woff2?v=1.2.0" as="font" type="font/woff2" crossorigin>
@@ -43,7 +55,7 @@ This document is a brief primer on using go templates." />
     
       
       
-      <link rel="stylesheet" href="/css/coder.min.d9fddbffe6f27e69985dc5fe0471cdb0e57fbf4775714bc3d847accb08f4a1f6.css" integrity="sha256-2f3b/&#43;byfmmYXcX&#43;BHHNsOV/v0d1cUvD2Eesywj0ofY=" crossorigin="anonymous" media="screen" />
+      <link rel="stylesheet" href="/css/coder.css" media="screen">
     
 
     
@@ -60,7 +72,7 @@ This document is a brief primer on using go templates." />
     <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
 
-    <meta name="generator" content="Hugo 0.107.0">
+    <meta name="generator" content="Hugo 0.126.2">
   </head>
 
   
@@ -81,6 +93,21 @@ This document is a brief primer on using go templates." />
       Alexey Kurin
     </a>
     
+      <input type="checkbox" id="menu-toggle" />
+      <label class="menu-button float-right" for="menu-toggle">
+        <i class="fa fa-bars fa-fw" aria-hidden="true"></i>
+      </label>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item">
+              <a class="navigation-link" href="/posts/">Blog</a>
+            </li>
+          
+        
+        
+      </ul>
+    
   </section>
 </nav>
 
@@ -92,7 +119,7 @@ This document is a brief primer on using go templates." />
       <header>
         <div class="post-title">
           <h1 class="title">
-            <a class="title-link" href="https://morjoff.com/posts/hugo-template-primer/">
+            <a class="title-link" href="http://localhost:1313/posts/hugo-template-primer/">
               (Hu)go Template Primer
             </a>
           </h1>
@@ -454,33 +481,6 @@ so, such as in this example:</p>
     
     
     
-      <h3 id="see-also-in-getting-started">
-        See also in Getting Started
-        <a class="heading-link" href="#see-also-in-getting-started">
-          <i class="fa fa-link" aria-hidden="true"></i>
-        </a>
-      </h3>
-      <nav>
-        <ul>
-        
-        
-          
-        
-          
-            <li>
-              <a href="/posts/hugoisforlovers/">Getting Started with Hugo</a>
-            </li>
-          
-        
-          
-            <li>
-              <a href="/posts/migrate-from-jekyll/">Migrate to Hugo from Jekyll</a>
-            </li>
-          
-        
-        </ul>
-      </nav>
-    
   
     
     
@@ -503,19 +503,7 @@ so, such as in this example:</p>
         
           
             <li>
-              <a href="https://github.com/luizdepra/hugo-coder/wiki">Hugo coder wiki</a>
-            </li>
-          
-        
-          
-            <li>
               <a href="/posts/theme-demo/">Theme Demo</a>
-            </li>
-          
-        
-          
-            <li>
-              <a href="/posts/creating-a-new-theme/">Creating a New Theme</a>
             </li>
           
         
@@ -524,6 +512,12 @@ so, such as in this example:</p>
           
             <li>
               <a href="/posts/hugoisforlovers/">Getting Started with Hugo</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="/posts/migrate-from-jekyll/">Migrate to Hugo from Jekyll</a>
             </li>
           
         
@@ -551,7 +545,7 @@ so, such as in this example:</p>
     
       2020 -
     
-    2023
+    2025
      Alexey Kurin 
     ·
     
@@ -564,12 +558,15 @@ so, such as in this example:</p>
 
     
       
-      <script src="/js/coder.min.9cf2dbf9b6989ef8eae941ffb4231c26d1dc026bca38f1d19fdba50177d8a9ac.js" integrity="sha256-nPLb&#43;baYnvjq6UH/tCMcJtHcAmvKOPHRn9ulAXfYqaw="></script>
+      <script src="/js/coder.js"></script>
     
 
     
 
     
+  
+
+
 
     
 
