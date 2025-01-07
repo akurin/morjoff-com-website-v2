@@ -9,20 +9,20 @@
     
 
     <meta name="author" content="Alexey Kurin">
-    <meta name="description" content="Recently, I stumbled upon a rather interesting bug in the Go project I’m working on at my job. It wasn&rsquo;t a complex issue, but it highlighted a subtle pitfall related to how we often handle JSON responses, particularly when dealing with pagination. Let me share the story.
+    <meta name="description" content="Recently, I stumbled upon a rather interesting bug in a Go project I’m working on at my job. It wasn&rsquo;t a complex issue, but it highlighted a subtle pitfall related to how we often handle JSON responses, particularly when dealing with pagination. Let me share the story.
 The Setup Our project involves a microservice, let&rsquo;s call it the &ldquo;User Service&rdquo;, that provides user data. Another microservice, let&rsquo;s call it the &ldquo;User Consumer,&rdquo; needs to replicate users from the User Service.">
     <meta name="keywords" content="blog,developer,personal">
 
     
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="json.Unmarshal Doesn&#39;t Clear Your Struct: A Pagination Bug Story">
-  <meta name="twitter:description" content="Recently, I stumbled upon a rather interesting bug in the Go project I’m working on at my job. It wasn’t a complex issue, but it highlighted a subtle pitfall related to how we often handle JSON responses, particularly when dealing with pagination. Let me share the story.
+  <meta name="twitter:description" content="Recently, I stumbled upon a rather interesting bug in a Go project I’m working on at my job. It wasn’t a complex issue, but it highlighted a subtle pitfall related to how we often handle JSON responses, particularly when dealing with pagination. Let me share the story.
 The Setup Our project involves a microservice, let’s call it the “User Service”, that provides user data. Another microservice, let’s call it the “User Consumer,” needs to replicate users from the User Service.">
 
     <meta property="og:url" content="https://morjoff.com/posts/json-unmarshal-bug/">
   <meta property="og:site_name" content="Alexey Kurin">
   <meta property="og:title" content="json.Unmarshal Doesn&#39;t Clear Your Struct: A Pagination Bug Story">
-  <meta property="og:description" content="Recently, I stumbled upon a rather interesting bug in the Go project I’m working on at my job. It wasn’t a complex issue, but it highlighted a subtle pitfall related to how we often handle JSON responses, particularly when dealing with pagination. Let me share the story.
+  <meta property="og:description" content="Recently, I stumbled upon a rather interesting bug in a Go project I’m working on at my job. It wasn’t a complex issue, but it highlighted a subtle pitfall related to how we often handle JSON responses, particularly when dealing with pagination. Let me share the story.
 The Setup Our project involves a microservice, let’s call it the “User Service”, that provides user data. Another microservice, let’s call it the “User Consumer,” needs to replicate users from the User Service.">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
@@ -134,7 +134,7 @@ The Setup Our project involves a microservice, let’s call it the “User Servi
 
       <div>
         
-        <p>Recently, I stumbled upon a rather interesting bug in the Go project I’m working on at my job. It wasn&rsquo;t a complex
+        <p>Recently, I stumbled upon a rather interesting bug in a Go project I’m working on at my job. It wasn&rsquo;t a complex
 issue, but it highlighted a subtle pitfall related to how we often handle JSON responses, particularly when dealing with
 pagination. Let me share the story.</p>
 <h2 id="the-setup">

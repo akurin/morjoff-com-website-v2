@@ -13,7 +13,7 @@
       <link>https://morjoff.com/posts/json-unmarshal-bug/</link>
       <pubDate>Mon, 06 Jan 2025 00:00:00 +0000</pubDate>
       <guid>https://morjoff.com/posts/json-unmarshal-bug/</guid>
-      <description>Recently, I stumbled upon a rather interesting bug in the Go project I’m working on at my job. It wasn&amp;rsquo;t a complex issue, but it highlighted a subtle pitfall related to how we often handle JSON responses, particularly when dealing with pagination. Let me share the story.&#xA;The Setup Our project involves a microservice, let&amp;rsquo;s call it the &amp;ldquo;User Service&amp;rdquo;, that provides user data. Another microservice, let&amp;rsquo;s call it the &amp;ldquo;User Consumer,&amp;rdquo; needs to replicate users from the User Service.</description>
+      <description>Recently, I stumbled upon a rather interesting bug in a Go project I’m working on at my job. It wasn&amp;rsquo;t a complex issue, but it highlighted a subtle pitfall related to how we often handle JSON responses, particularly when dealing with pagination. Let me share the story.&#xA;The Setup Our project involves a microservice, let&amp;rsquo;s call it the &amp;ldquo;User Service&amp;rdquo;, that provides user data. Another microservice, let&amp;rsquo;s call it the &amp;ldquo;User Consumer,&amp;rdquo; needs to replicate users from the User Service.</description>
     </item>
   </channel>
 </rss>
