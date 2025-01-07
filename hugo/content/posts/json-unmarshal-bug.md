@@ -51,7 +51,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"io"
 	"net/http"
 	"net/url"
@@ -125,6 +124,7 @@ func (u *UserClient) CollectAllUsers() ([]User, error) {
 
 	return allUsers, nil
 }
+
 ```
 
 ## The Problem
@@ -151,15 +151,15 @@ original code, where the `usersPage` variable was declared outside the loop and 
 ```go
 var page usersPage // !!!
 for {
-// ...
-if err := json.Unmarshal(body, &page); err != nil {
-// ...
-}
-// ...
-iterator = page.NextIterator
-if iterator == nil {
-break
-}
+	// ...
+	if err := json.Unmarshal(body, &page); err != nil {
+		// ...
+	}
+	// ...
+	iterator = page.NextIterator
+	if iterator == nil {
+		break
+	}
 }
 ```
 
@@ -173,16 +173,16 @@ The fix was relatively simple: we moved the declaration of `page` into the loop:
 
 ```go
 for {
-var page usersPage // fixed!
-// ...
-if err := json.Unmarshal(body, &page); err != nil {
-// ...
-}
-// ...
-iterator = page.NextIterator
-if iterator == nil {
-break
-}
+	var page usersPage // fixed!
+	// ...
+	if err := json.Unmarshal(body, &page); err != nil { 
+		// ...
+	}
+	// ...
+	iterator = page.NextIterator
+	if iterator == nil {
+		break
+	}
 }
 ```
 
@@ -197,16 +197,16 @@ struct before unmarshalling:
 
 ```go
 for {
-// Reset the page DTO before unmarshalling the new response
-page = usersPage{}
-if err := json.Unmarshal(body, &page); err != nil {
-// ...
-}
-// ...
-iterator = page.NextIterator
-if iterator == nil {
-break
-}
+	// Reset the page DTO before unmarshalling the new response
+	page = usersPage{}
+	if err := json.Unmarshal(body, &page); err != nil {
+		// ...
+	}
+	// ...
+	iterator = page.NextIterator
+	if iterator == nil {
+		break
+	}
 }
 ```
 
