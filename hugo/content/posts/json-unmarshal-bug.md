@@ -108,7 +108,7 @@ func (u *UserClient) CollectAllUsers() ([]User, error) {
 		}
 
 		// Reset the page DTO before unmarshalling the new response
-		// This fix was placed here after the bug report
+		// This is one of the ways to fix the bug
 		page = usersPage{}
 		if err := json.Unmarshal(body, &page); err != nil {
 			return nil, err
