@@ -3,9 +3,9 @@ date = "2025-01-06"
 title = "json.Unmarshal Doesn't Clear Your Struct: A Pagination Bug Story"
 +++
 
-Recently, I stumbled upon a rather interesting bug in one of my Go projects. It wasn't a complex issue, but it
-highlighted a subtle pitfall related to how we often handle JSON responses, particularly when dealing with pagination.
-Let me share the story.
+Recently, I stumbled upon a rather interesting bug in the Go project I’m working on at my job. It wasn't a complex
+issue, but it highlighted a subtle pitfall related to how we often handle JSON responses, particularly when dealing with
+pagination. Let me share the story.
 
 ## The Setup
 
