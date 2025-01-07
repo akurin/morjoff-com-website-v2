@@ -44,13 +44,16 @@ The Consumer would make a request to the User Service, process the returned user
 null, repeat the process, passing the `NextIterator` in the next request.
 
 The Go code for this looked somewhat like the following. Note that this is a simplified version and the bug is already
-fixed:
+fixed. For simplicity, this example uses an HTTP request; however, the original implementation called an AWS Lambda
+function. Also, please note that collecting all data in memory, as shown here, is not ideal but reflects how the legacy
+code is structured.
 
 ```go
 package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 	"net/url"
@@ -104,7 +107,7 @@ func (u *UserClient) CollectAllUsers() ([]User, error) {
 		_ = resp.Body.Close()
 
 		if resp.StatusCode != http.StatusOK {
-			return nil, err
+			return nil, fmt.Errorf("unexpected status code: %d", resp.StatusCode)
 		}
 
 		// Reset the page DTO before unmarshalling the new response
@@ -151,15 +154,15 @@ original code, where the `usersPage` variable was declared outside the loop and 
 ```go
 var page usersPage // !!!
 for {
-	// ...
-	if err := json.Unmarshal(body, &page); err != nil {
-		// ...
-	}
-	// ...
-	iterator = page.NextIterator
-	if iterator == nil {
-		break
-	}
+// ...
+if err := json.Unmarshal(body, &page); err != nil {
+// ...
+}
+// ...
+iterator = page.NextIterator
+if iterator == nil {
+break
+}
 }
 ```
 
@@ -173,16 +176,16 @@ The fix was relatively simple: we moved the declaration of `page` into the loop:
 
 ```go
 for {
-	var page usersPage // fixed!
-	// ...
-	if err := json.Unmarshal(body, &page); err != nil { 
-		// ...
-	}
-	// ...
-	iterator = page.NextIterator
-	if iterator == nil {
-		break
-	}
+var page usersPage // fixed!
+// ...
+if err := json.Unmarshal(body, &page); err != nil {
+// ...
+}
+// ...
+iterator = page.NextIterator
+if iterator == nil {
+break
+}
 }
 ```
 
@@ -197,16 +200,16 @@ struct before unmarshalling:
 
 ```go
 for {
-	// Reset the page DTO before unmarshalling the new response
-	page = usersPage{}
-	if err := json.Unmarshal(body, &page); err != nil {
-		// ...
-	}
-	// ...
-	iterator = page.NextIterator
-	if iterator == nil {
-		break
-	}
+// Reset the page DTO before unmarshalling the new response
+page = usersPage{}
+if err := json.Unmarshal(body, &page); err != nil {
+// ...
+}
+// ...
+iterator = page.NextIterator
+if iterator == nil {
+break
+}
 }
 ```
 
