@@ -26,7 +26,7 @@ jobs:
 
       - name: Deploy to Kubernetes with Helm
         run: |
-          helm upgrade --install --rollback-on-failure \
+          helm upgrade --install --atomic \
             --set appImage.tag=${{ github.sha }} \
             --set dbImage.tag=${{ github.sha }} \
             morjoff-com-website helm --values helm/values.yaml
