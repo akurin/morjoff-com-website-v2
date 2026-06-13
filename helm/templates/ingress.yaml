@@ -32,7 +32,7 @@ spec:
         paths:
           {{- range .paths }}
           - path: {{ .path }}
-            pathType: Prefix
+            pathType: {{ .pathType | default "Prefix" }}
             backend:
               service:
                 name: {{ $fullName }}
@@ -40,4 +40,4 @@ spec:
                   number: {{ $svcPort }}
           {{- end }}
     {{- end }}
-  {{- end }}
+{{- end }}
