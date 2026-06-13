@@ -42,16 +42,13 @@ service:
 
 ingress:
   enabled: true
+  className: traefik
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
-    kubernetes.io/ingress.class: traefik
   hosts:
     - host: morjoff.com
       paths:
         - path: /
-          backend:
-            serviceName: morjoff-web-site.local
-            servicePort: 80
   tls:
     - secretName: morjoff.com
       hosts:
