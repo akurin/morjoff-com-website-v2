@@ -43,16 +43,21 @@ jobs:
       - name: Set up Helm
         uses: azure/setup-helm@v5
 
+      - name: Set up SSH tunnel to k3s API server
+        env:
+          CI_DEPLOY_SSH_KEY: ${{ secrets.CI_DEPLOY_SSH_KEY }}
+          K3S_HOST: ${{ secrets.K3S_HOST }}
+        run: |
+          echo "$CI_DEPLOY_SSH_KEY" > /tmp/ci_deploy_key
+          chmod 600 /tmp/ci_deploy_key
+          ssh -o StrictHostKeyChecking=accept-new -i /tmp/ci_deploy_key \
+            -L 16443:127.0.0.1:6443 -N "ci-deploy@$K3S_HOST" &
+          sleep 2
+
       - name: Set k8s context
         uses: Azure/k8s-set-context@v5
         with:
           kubeconfig: ${{ secrets.KUBECONFIG }}
-
-      - name: Set up Tailscale VPN
-        uses: tailscale/github-action@v4
-        with:
-          authkey: ${{ secrets.TAILSCALE_KEY }}
-          args: --login-server=https://headscale.morjoff.com
 
       - name: Deploy to Kubernetes with Helm
         run: |
