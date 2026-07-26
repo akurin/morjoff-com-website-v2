@@ -60,7 +60,7 @@ jobs:
           echo "$CI_DEPLOY_SSH_KEY" > /tmp/ci_deploy_key
           chmod 600 /tmp/ci_deploy_key
           ssh -o StrictHostKeyChecking=accept-new -i /tmp/ci_deploy_key \
-            -L 16443:127.0.0.1:6443 -N "ci-deploy@$K3S_HOST" &
+            -L 6443:127.0.0.1:6443 -N "ci-deploy@$K3S_HOST" &
           SSH_PID=$!
           sleep 2
 
