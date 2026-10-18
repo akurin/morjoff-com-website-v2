@@ -2,8 +2,9 @@ replicaCount: 1
 
 image:
   repository: ghcr.io/akurin/morjoff-com-website-v2
-  pullPolicy: Always
-  tag: "latest"
+  pullPolicy: IfNotPresent
+  # CI deploys the commit's image (--set image.tag=<sha>); empty means the chart's appVersion.
+  tag: ""
 
 service:
   type: ClusterIP
@@ -24,7 +25,26 @@ ingress:
       hosts:
         - morjoff.com
 
-resources: {}
+# nginx-unprivileged runs as uid 101 and only needs a writable /tmp.
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 101
+  runAsGroup: 101
+  seccompProfile:
+    type: RuntimeDefault
+
+securityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  capabilities:
+    drop: [ALL]
+
+resources:
+  requests:
+    cpu: 10m
+    memory: 16Mi
+  limits:
+    memory: 128Mi
 
 nodeSelector: {}
 tolerations: []
