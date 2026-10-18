@@ -6,14 +6,21 @@
     <description>Recent content on Alexey Kurin</description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 06 Jan 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 18 Oct 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://morjoff.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Stale Keep-Alive Connections on AWS Lambda</title>
+      <link>https://morjoff.com/posts/stale-keep-alive-connections-lambda/</link>
+      <pubDate>Sun, 18 Oct 2026 00:00:00 +0000</pubDate>
+      <guid>https://morjoff.com/posts/stale-keep-alive-connections-lambda/</guid>
+      <description>A Go Lambda function that reuses HTTP keep-alive connections can fail with Post &amp;quot;…&amp;quot;: EOF on the first request after a pause. The server closed the idle connection while the function was frozen, and Go&amp;rsquo;s HTTP client hands out the dead connection before it notices. Setting the transport&amp;rsquo;s IdleConnTimeout below the server&amp;rsquo;s keep-alive timeout prevents the common case, a connection the server closed for being idle. It doesn&amp;rsquo;t cover servers that close connections for other reasons, such as a deploy or a restart.</description>
+    </item>
     <item>
       <title>json.Unmarshal Doesn&#39;t Clear Your Struct: A Pagination Bug Story</title>
       <link>https://morjoff.com/posts/json-unmarshal-bug/</link>
       <pubDate>Mon, 06 Jan 2025 00:00:00 +0000</pubDate>
       <guid>https://morjoff.com/posts/json-unmarshal-bug/</guid>
-      <description>Recently, I stumbled upon a rather interesting bug in a Go project I’m working on at my job. It wasn&amp;rsquo;t a complex issue, but it highlighted a subtle pitfall related to how we often handle JSON responses, particularly when dealing with pagination. Let me share the story.&#xA;The Setup Our project involves a microservice, let&amp;rsquo;s call it the &amp;ldquo;User Service&amp;rdquo;, that provides user data. Another microservice, let&amp;rsquo;s call it the &amp;ldquo;User Consumer,&amp;rdquo; needs to replicate users from the User Service.</description>
+      <description>json.Unmarshal only sets the fields that appear in the JSON. If you decode several responses into the same struct, a field missing from a later response keeps its value from an earlier one. In a pagination loop that can mean the &amp;ldquo;next page&amp;rdquo; token never becomes empty, and the loop never ends.&#xA;This started with a Go service at work that replicates users from another service, page by page. After a small change in the API&amp;rsquo;s responses, the consumer got stuck in an infinite loop.</description>
     </item>
     <item>
       <title>About Hugo</title>
