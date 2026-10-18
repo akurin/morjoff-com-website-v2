@@ -2,12 +2,21 @@ name: CI
 on:
   push:
     branches: [master]
+  pull_request:
+    branches: [master]
   workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  # Supersede older builds of a pull request, but let master pushes finish.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
+      contents: read
       packages: write
     steps:
       - name: Checkout code
@@ -17,25 +26,32 @@ jobs:
         uses: docker/setup-buildx-action@v4
 
       - name: Login to Github Packages
+        if: github.event_name != 'pull_request'
         uses: docker/login-action@v4.5.2
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      # Pull requests only check that the site builds; other events also push.
       - name: Build image and push to GitHub Container Registry
         uses: docker/build-push-action@v7
         with:
           tags: |
             ghcr.io/akurin/morjoff-com-website-v2:latest
             ghcr.io/akurin/morjoff-com-website-v2:${{ github.sha }}
-          push: true
+          push: ${{ github.event_name != 'pull_request' }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
   deploy:
     needs: build
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     environment: production
+    concurrency:
+      group: production
     steps:
       - name: Checkout code
         uses: actions/checkout@v7
@@ -56,16 +72,20 @@ jobs:
         env:
           CI_DEPLOY_SSH_KEY: ${{ secrets.CI_DEPLOY_SSH_KEY }}
           K3S_HOST: ${{ secrets.K3S_HOST }}
+          K3S_KNOWN_HOSTS: ${{ secrets.K3S_KNOWN_HOSTS }}
         run: |
+          install -m 600 /dev/null /tmp/ci_deploy_key
           echo "$CI_DEPLOY_SSH_KEY" > /tmp/ci_deploy_key
-          chmod 600 /tmp/ci_deploy_key
-          ssh -o StrictHostKeyChecking=accept-new -i /tmp/ci_deploy_key \
-            -L 6443:127.0.0.1:6443 -N "ci-deploy@$K3S_HOST" &
-          SSH_PID=$!
-          sleep 2
+          echo "$K3S_KNOWN_HOSTS" > /tmp/known_hosts
+
+          # -f returns once the tunnel is up; ExitOnForwardFailure makes it fail instead
+          # if the port can't be forwarded. The control socket lets us close it afterwards.
+          ssh -f -N -M -S /tmp/k3s-tunnel \
+            -o StrictHostKeyChecking=yes -o UserKnownHostsFile=/tmp/known_hosts \
+            -o ExitOnForwardFailure=yes -i /tmp/ci_deploy_key \
+            -L 6443:127.0.0.1:6443 "ci-deploy@$K3S_HOST"
+          trap 'ssh -S /tmp/k3s-tunnel -O exit "ci-deploy@$K3S_HOST"' EXIT
 
           helm upgrade --install --atomic \
             --set image.tag=${{ github.sha }} \
             morjoff-com-website helm --values helm/values.yaml
-
-          kill $SSH_PID
