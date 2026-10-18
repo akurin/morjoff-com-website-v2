@@ -5,3 +5,9 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+
+  # Keep the Hugo and nginx images in the Dockerfile up to date
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"

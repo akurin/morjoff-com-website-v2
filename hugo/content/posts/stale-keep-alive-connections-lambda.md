@@ -1,6 +1,7 @@
 +++
 date = "2026-10-18"
 title = "Stale Keep-Alive Connections on AWS Lambda"
+description = "Why a Go HTTP client on AWS Lambda fails with EOF after a pause, why Python, Node.js and .NET don't, and what helps in Go."
 +++
 
 A Go Lambda function that reuses HTTP keep-alive connections can fail with `Post "…": EOF` on the first request after a pause. The server closed the idle connection while the function was frozen, and Go's HTTP client hands out the dead connection before it notices. Setting the transport's `IdleConnTimeout` below the server's keep-alive timeout prevents the common case, a connection the server closed for being idle. It doesn't cover servers that close connections for other reasons, such as a deploy or a restart. Python, Node.js and .NET clients didn't fail in the same test.

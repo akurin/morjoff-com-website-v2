@@ -1,6 +1,8 @@
 +++
 date = "2025-01-06"
 title = "json.Unmarshal Doesn't Clear Your Struct: A Pagination Bug Story"
+description = "json.Unmarshal leaves fields that are missing from the JSON untouched, so a reused struct keeps stale values. A pagination bug caused by that, and the fix."
+lastmod = "2026-10-18"
 +++
 
 `json.Unmarshal` only sets the fields that appear in the JSON. If you decode several responses into the same struct, a
