@@ -1,5 +1,5 @@
 # Build the site with a pinned Hugo, so only sources are committed.
-FROM ghcr.io/gohugoio/hugo:v0.168.0 AS build
+FROM ghcr.io/gohugoio/hugo:v0.169.0 AS build
 COPY --chown=hugo:hugo hugo/ /project/
 RUN hugo
 
